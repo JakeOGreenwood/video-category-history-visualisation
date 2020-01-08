@@ -8,10 +8,9 @@ from bs4 import BeautifulSoup
 
 
 class VideoTimeGraph:
-    def __init__(self):
-        self.api_key = "AIzaSyAj_BaZGoE8fGEaH2zBNkrqHnFVfU78ie8"
+    def __init__(self, api_key):
         self.youtube_api_url = "https://www.googleapis.com/youtube/v3/videos"
-
+        self.api_key = api_key
         print("initialised")
 
     def load_html(self, history_html):
@@ -90,19 +89,19 @@ class VideoTimeGraph:
 
     def run(self, history_html):
         self.load_html(history_html)
-        print(self.video_list[:3])
+        print(self.video_dataframe[:3])
         #self.youtube_api_category_request()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("history",type=str,help="Your Youtube watch history HTML file")
-    parser.add_argument("api key",type=str,help="Your Youtube Data v3 API Key found on https://console.developers.google.com/apis/credentials")
+    parser.add_argument("apiKey",type=str,help="Your Youtube Data v3 API Key found on https://console.developers.google.com/apis/credentials")
 
     args = parser.parse_args()
 
 
     history_html = args.history
-
-    video_time_graph = VideoTimeGraph()
+    api_key = args.apiKey
+    video_time_graph = VideoTimeGraph(api_key)
     video_time_graph.run(history_html)
